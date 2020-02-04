@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/mainMenyuFragment">
+
+    <fragment
+        android:id="@+id/mainMenyuFragment"
+        android:name="com.example.liberatingdelta_kotlin1.actFragments.MainMenyuFragment"
+        android:label="fragment_main_menyu"
+        tools:layout="@layout/fragment_main_menyu" >
+        <action
+            android:id="@+id/action_mainMenyuFragment_to_regionMapFragment"
+            app:destination="@id/regionMapFragment"
+            app:popUpTo="@id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_mainMenyuFragment_to_wholeMapFragment"
+            app:destination="@id/wholeMapFragment"
+            app:popUpTo="@id/mainMenyuFragment" />
+        <action
+            android:id="@+id/action_mainMenyuFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:popUpTo="@id/mainMenyuFragment" />
+        <action
+            android:id="@+id/action_mainMenyuFragment_to_charViewFragment"
+            app:destination="@id/charViewFragment"
+            app:popUpTo="@id/mainMenyuFragment" />
+        <action
+            android:id="@+id/action_mainMenyuFragment_to_journalFragment"
+            app:destination="@id/journalFragment"
+            app:popUpTo="@id/mainMenyuFragment" />
+        <action
+            android:id="@+id/action_mainMenyuFragment_to_deckViewFragment"
+            app:destination="@id/deckViewFragment"
+            app:popUpTo="@id/mainMenyuFragment" />
+        <action
+            android:id="@+id/action_mainMenyuFragment_to_inventoryViewFragment"
+            app:destination="@id/inventoryViewFragment"
+            app:popUpTo="@id/mainMenyuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/charViewFragment"
+        android:name="com.example.liberatingdelta_kotlin1.MainMenyuFragments.CharViewFragment_stats"
+        android:label="fragment_char_view_stats"
+        tools:layout="@layout/fragment_char_view_stats" >
+        <action
+            android:id="@+id/action_charViewFragment_to_mainMenyuFragment"
+            app:destination="@id/mainMenyuFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charViewFragment_to_charViewFragment_equip"
+            app:destination="@id/charViewFragment_equip"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charViewFragment_to_charviewFragment_region"
+            app:destination="@id/charviewFragment_region"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charViewFragment_to_charViewFragment_rank"
+            app:destination="@id/charViewFragment_rank"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charViewFragment_to_charViewFragment_info"
+            app:destination="@id/charViewFragment_info"
+            app:popUpTo="@id/mainMenyuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/regionMapFragment"
+        android:name="com.example.liberatingdelta_kotlin1.MainMenyuFragments.RegionMapFragment"
+        android:label="fragment_region_map"
+        tools:layout="@layout/fragment_region_map" >
+        <action
+            android:id="@+id/action_regionMapFragment_to_regionMapFragment_cityPressed"
+            app:destination="@id/regionMapFragment_cityPressed"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/deckViewFragment"
+        android:name="com.example.liberatingdelta_kotlin1.MainMenyuFragments.DeckViewFragment"
+        android:label="fragment_deck_view"
+        tools:layout="@layout/fragment_deck_view" >
+        <action
+            android:id="@+id/action_deckViewFragment_to_mainMenyuFragment"
+            app:destination="@id/mainMenyuFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_deckViewFragment_to_deckViewFragment_card"
+            app:destination="@id/deckViewFragment_card"
+            app:popUpTo="@+id/deckViewFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/wholeMapFragment"
+        android:name="com.example.liberatingdelta_kotlin1.actFragments.wholeMapFragment"
+        android:label="fragment_whole_map"
+        tools:layout="@layout/fragment_whole_map" >
+        <action
+            android:id="@+id/action_wholeMapFragment_to_mainMenyuFragment"
+            app:destination="@id/mainMenyuFragment"
+            app:popUpTo="@id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.liberatingdelta_kotlin1.actFragments.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_mainMenyuFragment"
+            app:destination="@id/mainMenyuFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/journalFragment"
+        android:name="com.example.liberatingdelta_kotlin1.actFragments.JournalFragment"
+        android:label="fragment_journal"
+        tools:layout="@layout/fragment_journal_view" >
+        <action
+            android:id="@+id/action_journalFragment_to_mainMenyuFragment"
+            app:destination="@id/mainMenyuFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/inventoryViewFragment"
+        android:name="com.example.liberatingdelta_kotlin1.actFragments.InventoryViewFragment_item"
+        android:label="fragment_inventory_view"
+        tools:layout="@layout/fragment_inventory_view_item" >
+        <action
+            android:id="@+id/action_inventoryViewFragment_to_mainMenyuFragment"
+            app:destination="@id/mainMenyuFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/charViewFragment_equip"
+        android:name="com.example.liberatingdelta_kotlin1.MainMenyuFragments.CharViewFragment_equip"
+        android:label="fragment_char_view_equip"
+        tools:layout="@layout/fragment_char_view_equip" >
+        <action
+            android:id="@+id/action_charViewFragment_equip_to_charViewFragment"
+            app:destination="@id/charViewFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charViewFragment_equip_to_charviewFragment_region"
+            app:destination="@id/charviewFragment_region"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charViewFragment_equip_to_charViewFragment_rank"
+            app:destination="@id/charViewFragment_rank"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charViewFragment_equip_to_charViewFragment_info"
+            app:destination="@id/charViewFragment_info"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charViewFragment_equip_to_mainMenyuFragment"
+            app:destination="@id/mainMenyuFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/charviewFragment_region"
+        android:name="com.example.liberatingdelta_kotlin1.MainMenyuFragments.CharviewFragment_region"
+        android:label="fragment_charview_region"
+        tools:layout="@layout/fragment_char_view_region" >
+        <action
+            android:id="@+id/action_charviewFragment_region_to_mainMenyuFragment"
+            app:destination="@id/mainMenyuFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charviewFragment_region_to_charViewFragment"
+            app:destination="@id/charViewFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charviewFragment_region_to_charViewFragment_equip"
+            app:destination="@id/charViewFragment_equip"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charviewFragment_region_to_charViewFragment_rank"
+            app:destination="@id/charViewFragment_rank"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charviewFragment_region_to_charViewFragment_info"
+            app:destination="@id/charViewFragment_info"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/charViewFragment_rank"
+        android:name="com.example.liberatingdelta_kotlin1.MainMenyuFragments.CharViewFragment_rank"
+        android:label="fragment_char_view_rank"
+        tools:layout="@layout/fragment_char_view_rank" >
+        <action
+            android:id="@+id/action_charViewFragment_rank_to_mainMenyuFragment"
+            app:destination="@id/mainMenyuFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charViewFragment_rank_to_charViewFragment"
+            app:destination="@id/charViewFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charViewFragment_rank_to_charViewFragment_equip"
+            app:destination="@id/charViewFragment_equip"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charViewFragment_rank_to_charviewFragment_region"
+            app:destination="@id/charviewFragment_region"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charViewFragment_rank_to_charViewFragment_info"
+            app:destination="@id/charViewFragment_info"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/charViewFragment_info"
+        android:name="com.example.liberatingdelta_kotlin1.MainMenyuFragments.CharViewFragment_info"
+        android:label="fragment_char_view_info"
+        tools:layout="@layout/fragment_char_view_info" >
+        <action
+            android:id="@+id/action_charViewFragment_info_to_mainMenyuFragment"
+            app:destination="@id/mainMenyuFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charViewFragment_info_to_charViewFragment"
+            app:destination="@id/charViewFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charViewFragment_info_to_charViewFragment_equip"
+            app:destination="@id/charViewFragment_equip"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charViewFragment_info_to_charviewFragment_region"
+            app:destination="@id/charviewFragment_region"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_charViewFragment_info_to_charViewFragment_rank"
+            app:destination="@id/charViewFragment_rank"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/deckViewFragment_edit"
+        android:name="com.example.liberatingdelta_kotlin1.MainMenyuFragments.DeckViewFragment_edit"
+        android:label="fragment_deck_view_edit"
+        tools:layout="@layout/fragment_deck_view_edit" >
+        <action
+            android:id="@+id/action_deckViewFragment_edit_to_deckViewFragment_card"
+            app:destination="@id/deckViewFragment_card"
+            app:popUpTo="@+id/deckViewFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/deckViewFragment_card"
+        android:name="com.example.liberatingdelta_kotlin1.MainMenyuFragments.DeckViewFragment_card"
+        android:label="fragment_deck_view_card"
+        tools:layout="@layout/fragment_deck_view_card" >
+        <action
+            android:id="@+id/action_deckViewFragment_card_to_deckViewFragment_edit"
+            app:destination="@id/deckViewFragment_edit"
+            app:popUpTo="@+id/deckViewFragment_card"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_deckViewFragment_card_to_deckViewFragment"
+            app:destination="@id/deckViewFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/inventoryViewFragment_weapon"
+        android:name="com.example.liberatingdelta_kotlin1.actFragments.InventoryViewFragment_weapon"
+        android:label="fragment_inventory_view_weapon"
+        tools:layout="@layout/fragment_inventory_view_weapon" />
+    <fragment
+        android:id="@+id/inventoryViewFragment_card"
+        android:name="com.example.liberatingdelta_kotlin1.actFragments.InventoryViewFragment_card"
+        android:label="fragment_inventory_view_card"
+        tools:layout="@layout/fragment_inventory_view_card" />
+    <fragment
+        android:id="@+id/inventoryViewFragment_deck"
+        android:name="com.example.liberatingdelta_kotlin1.actFragments.InventoryViewFragment_deck"
+        android:label="fragment_inventory_view_deck"
+        tools:layout="@layout/fragment_inventory_view_deck" />
+    <fragment
+        android:id="@+id/regionMapFragment_cityPressed"
+        android:name="com.example.liberatingdelta_kotlin1.MainMenyuFragments.RegionMapFragment_cityPressed"
+        android:label="fragment_region_map_city_pressed"
+        tools:layout="@layout/fragment_region_map_city_pressed" >
+        <action
+            android:id="@+id/action_regionMapFragment_cityPressed_to_regionMapFragment_shopPressed"
+            app:destination="@id/regionMapFragment_shopPressed"
+            app:popUpTo="@+id/regionMapFragment_cityPressed"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_regionMapFragment_cityPressed_to_regionMapFragment_chPressed"
+            app:destination="@id/regionMapFragment_chPressed"
+            app:popUpTo="@+id/regionMapFragment_cityPressed"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/regionMapFragment_chPressed"
+        android:name="com.example.liberatingdelta_kotlin1.MainMenyuFragments.RegionMapFragment_chPressed"
+        android:label="fragment_region_map_ch_pressed"
+        tools:layout="@layout/fragment_region_map_ch_pressed" >
+        <action
+            android:id="@+id/action_regionMapFragment_chPressed_to_regionMapFragment_chPressed2"
+            app:destination="@id/regionMapFragment_chPressed2"
+            app:popUpTo="@+id/regionMapFragment_chPressed"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/regionMapFragment_chPressed2"
+        android:name="com.example.liberatingdelta_kotlin1.MainMenyuFragments.RegionMapFragment_chPressed2"
+        android:label="fragment_region_map_ch_pressed2"
+        tools:layout="@layout/fragment_region_map_ch_pressed2" >
+        <action
+            android:id="@+id/action_regionMapFragment_chPressed2_to_preBattleFragment"
+            app:destination="@id/preBattleFragment"
+            app:popUpTo="@+id/regionMapFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/regionMapFragment_shopPressed"
+        android:name="com.example.liberatingdelta_kotlin1.MainMenyuFragments.RegionMapFragment_shopPressed"
+        android:label="fragment_region_map_shop_pressed"
+        tools:layout="@layout/fragment_region_map_shop_pressed" />
+    <fragment
+        android:id="@+id/preBattleFragment"
+        android:name="com.example.liberatingdelta_kotlin1.actFragments.PreBattleFragment"
+        android:label="fragment_pre_battle"
+        tools:layout="@layout/fragment_pre_battle" >
+        <action
+            android:id="@+id/action_preBattleFragment_to_battleFragment"
+            app:destination="@id/battleFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_preBattleFragment_to_dialogFragment"
+            app:destination="@id/dialogFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/battleFragment"
+        android:name="com.example.liberatingdelta_kotlin1.actFragments.BattleFragment"
+        android:label="fragment_battle"
+        tools:layout="@layout/fragment_battle" >
+        <action
+            android:id="@+id/action_battleFragment_to_dialogFragment"
+            app:destination="@id/dialogFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_battleFragment_to_rewardsFragment"
+            app:destination="@id/rewardsFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/rewardsFragment"
+        android:name="com.example.liberatingdelta_kotlin1.actFragments.RewardsFragment"
+        android:label="fragment_rewards"
+        tools:layout="@layout/fragment_rewards" >
+        <action
+            android:id="@+id/action_rewardsFragment_to_mainMenyuFragment"
+            app:destination="@id/mainMenyuFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/dialogFragment"
+        android:name="com.example.liberatingdelta_kotlin1.actFragments.DialogFragment"
+        android:label="fragment_dialog"
+        tools:layout="@layout/fragment_dialog" >
+        <action
+            android:id="@+id/action_dialogFragment_to_battleFragment"
+            app:destination="@id/battleFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_dialogFragment_to_rewardsFragment"
+            app:destination="@id/rewardsFragment"
+            app:popUpTo="@+id/mainMenyuFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+</navigation>

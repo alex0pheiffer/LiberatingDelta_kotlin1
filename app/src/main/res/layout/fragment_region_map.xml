@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainMenyuFragments.RegionMapFragment">
+
+    <!--the map background..todo add a separate border to cover the screen differences...-->
+    <ImageView
+        android:id="@+id/regionBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+        <fragment
+            android:id="@+id/regionMapFragment_backbtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.example.liberatingdelta_kotlin1.UpButtonFragment"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menyu_mmc_backbox"
+        android:layout_width="180dp"
+        android:layout_height="match_parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/barBack"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/menyu_regionmap_btn_frag"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/backbox_region_title"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/backbox_region_info"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9"
+            android:background="@color/colorPrimaryDark"/>
+    </LinearLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/menyu_regionmap_btn_frag"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/menyu_mmc_backbox"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/regionBack"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
