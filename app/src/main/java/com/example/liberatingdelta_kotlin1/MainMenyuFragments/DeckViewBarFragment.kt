@@ -9,20 +9,24 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.liberatingdelta_kotlin1.R
+import com.example.liberatingdelta_kotlin1.basic_classes.Deck
+import com.example.liberatingdelta_kotlin1.basic_classes.PL
+import com.example.liberatingdelta_kotlin1.pl_relations.PL_VendingMachine
 
-private const val ARG_PARAM1 = "param1"
+private const val PlayerLevel = "PlayerLevel"
 private const val ARG_PARAM2 = "param2"
 
-class DeckViewBarFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
+class DeckViewBarFragment : Fragment(), updateAllPL {
+    private var pl: Int = 0
+    private lateinit var this_pl: PL
     private var param2: String? = null
     private var listener: deckViewBarListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
+            pl = it.getInt(PlayerLevel)
+            this_pl = PL_VendingMachine.getPL(pl)
             param2 = it.getString(ARG_PARAM2)
         }
     }
@@ -56,6 +60,11 @@ class DeckViewBarFragment : Fragment() {
         }
     }
 
+    override fun lemmeupdatethatpl(pl:Int) {
+        this.pl = pl
+        this_pl = PL_VendingMachine.getPL(pl)
+    }
+
     override fun onDetach() {
         super.onDetach()
         listener = null
@@ -69,10 +78,10 @@ class DeckViewBarFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(pl: Int, param2: String) =
             DeckViewBarFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
+                    putInt(PlayerLevel, pl)
                     putString(ARG_PARAM2, param2)
                 }
             }

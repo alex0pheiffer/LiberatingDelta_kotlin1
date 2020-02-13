@@ -4,37 +4,33 @@ import com.example.liberatingdelta_kotlin1.basic_classes.Card
 import com.example.liberatingdelta_kotlin1.basic_classes.Characters
 import com.example.liberatingdelta_kotlin1.basic_classes.battle_character
 
-class Splash : Card("Splash", 0, false, false, false, false, 5, 0, 100) {
-    val instanceName: String
-    fun preformCard(user: battle_character, target: battle_character) {
+class Splash : Card("Splash", 0, null, null, false,5, 0, 100) {
+
+    override val instanceName: String
+
+    override fun preformCard(user: battle_character, target: battle_character) {
         println("Returns .5 * mAtk or 0")
-        var amt = (user.getMatk() * .5) as Int
+        var amt = (user.stats.attackM?.times(.5) ?: 0) as Int
         amt =
-            if (user.getType() !== Characters.getMType(0)) target.hitWMagic(
-                amt,
-                user.getType()
-            ) else 0
-        println(target.getNom().toString() + " lost " + amt + " hp.")
-        println(target.getNom().toString() + " : " + target.getHP())
+            if (user.type !== Characters.magicTypes[0]) target.hitWMagic(amt, user.type)
+            else 0
+        println(target.nom + " lost " + amt + " hp.")
+        println(target.nom + " : " + target.hp)
     }
 
-    fun preformEffectTodo(target: battle_character?) { //none
+    override val info: () -> String = {
+        "Attack Opponent with .5*mAtk if Self has magic.\n" +
+        "Targets: " + targetAmt + "\tWeight: " + weight + "\tWait: " + wait
     }
-
-    val info: String
-        get() = "Attack Opponent with .5*mAtk if Self has magic.\n" +
-                "Targets: " + getTargetCharAmt() + "\tWeight: " + getWeight() + "\tWait: " + getWait()
-
-    val numInstance: Int
-
     override fun toString(): String {
-        return getClass().getSimpleName()
+        return javaClass.getSimpleName()
     }
 
     companion object {
         var deckAmt = 0
             private set
-        private const val numInstance = 0
+
+        private var numInstance = 0
 
         fun addDeckAmt() {
             deckAmt++
@@ -44,9 +40,12 @@ class Splash : Card("Splash", 0, false, false, false, false, 5, 0, 100) {
             deckAmt--
         }
     }
+    override fun addDeckAmt() { Companion.addDeckAmt()}
+    override fun removeDeckAmt() { Companion.removeDeckAmt()}
+
 
     init {
-        instanceName = getClass().getSimpleName().toString() + " " + numInstance
+        instanceName = javaClass.getSimpleName()+ " " + numInstance
         numInstance++
     }
 }

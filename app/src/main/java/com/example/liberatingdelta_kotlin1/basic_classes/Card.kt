@@ -4,7 +4,7 @@ abstract class Card(
     val nom: String,
     val cardImg: Int,
     val specWeapon: Weapon?,
-    val specCharacter: Characters?,
+    val specCharacter: String?,
     val alliesSupport: Boolean,
     val targetAmt: Int,
     val weight: Int, //how powerful the card is: 0-5
@@ -57,6 +57,9 @@ abstract class Card(
             deckAmt--
         }
     }
+
+    open fun addDeckAmt() {}
+    open fun removeDeckAmt() {}
 
     init {
         instanceName = this.javaClass.simpleName //instanceName must be overwritten for subclasses!! and concat instanceNum to end.

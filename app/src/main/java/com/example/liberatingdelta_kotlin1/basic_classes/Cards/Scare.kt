@@ -6,33 +6,34 @@ import com.example.liberatingdelta_kotlin1.basic_classes.battle_character
 import com.example.liberatingdelta_kotlin1.basic_classes.stats_object
 
 class Scare :
-    Card("Scare", R.drawable.scare_card, false, false, false, false, 0, 0, 20) {
-    val instanceName: String
-    fun preformCard(user: battle_character?, target: battle_character) {
-        println(target.getNom().toString() + "has decreased defense ( P ) by 10% for 3 turns.")
+    Card("Scare", R.drawable.card_scare, null, null, false, 0, 0, 20) {
+
+    override val instanceName: String
+
+    override fun preformCard(user: battle_character, target: battle_character) {
+        println(target.nom + "has decreased defense ( P ) by 10% for 3 turns.")
         preformEffectTodo(target)
         target.addEffectTodo(this, 2)
     }
 
     fun preformEffectTodo(target: battle_character) {
-        println(target.getNom().toString() + "has has decreased defense ( P ) by 10%.")
-        target.getEffectStats().subtractStats(stats_object(0, 0, 0, 0, 0, 10, 0, 0, 0, 0))
+        println(target.nom + "has has decreased defense ( P ) by 10%.")
+        target.subtractEffect(stats_object(0, 0, 0, 0, 0, 10, 0, 0, 0, 0))
     }
 
-    val info: String
-        get() = "↓ Opponent's pDef by 10% for 3 turns.\n" +
-                "Targets: " + getTargetCharAmt() + "\tWeight: " + getWeight() + "\tWait: " + getWait()
-
-    val numInstance: Int
-
+    override val info: () -> String = {
+        "↓ Opponent's pDef by 10% for 3 turns.\n" +
+        "Targets: " + targetAmt + "\tWeight: " + weight + "\tWait: " + wait
+    }
     override fun toString(): String {
-        return getClass().getSimpleName()
+        return javaClass.getSimpleName()
     }
 
     companion object {
         var deckAmt = 0
             private set
-        private const val numInstance = 0
+
+        private var numInstance = 0
 
         fun addDeckAmt() {
             deckAmt++
@@ -42,9 +43,11 @@ class Scare :
             deckAmt--
         }
     }
+    override fun addDeckAmt() { Companion.addDeckAmt()}
+    override fun removeDeckAmt() { Companion.removeDeckAmt()}
 
     init {
-        instanceName = getClass().getSimpleName().toString() + " " + numInstance
+        instanceName = this.toString()+ " " + numInstance
         numInstance++
     }
 }

@@ -8,8 +8,9 @@ abstract class fighting_character(
     age: Int,
     height: Int,
     human: Boolean,
-    magicalAff: Int,
-    strength: Int,
+    val magicalAffinity : Int,     //how strong is your magical affinity? compare this to your relative strength to others...
+    val strength: Int,      //used purely for a reference betwen magic:strength...this has no real coorelation to the physcal attack value.
+                        //it's a percent...how their physical strength compares to their magical strength
     charType: String,
     magicType: String?,
     charImgMain: Int?,
@@ -26,8 +27,6 @@ abstract class fighting_character(
     age,
     height,
     human,
-    magicalAff,
-    strength,
     charType,
     magicType,
     charImgMain

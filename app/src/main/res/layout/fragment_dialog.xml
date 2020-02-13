@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_marginTop="10dp"
-        android:orienation="horizontal"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
         <Space

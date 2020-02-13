@@ -8,8 +8,6 @@ abstract class Characters(
     val age: Int,
     val height: Int, //in centimeters
     val isHuman: Boolean,
-    val magicalAffinity: Int,
-    val strength: Int,
     val charType: String,
     val magicType: String?,
     var charImgMain: Int?

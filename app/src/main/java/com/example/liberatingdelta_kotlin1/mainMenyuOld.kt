@@ -1089,7 +1089,7 @@ class mainMenyuOld : AppCompatActivity(),
         itemsBar = menyu_itemsbar.newInstance()
         Log.d(
             "DEBUG",
-            R.drawable.katie1.toString() + " " + (myDataController!!.cur_character as main_character).getCharacterImgDrawable()
+            R.drawable.character_katie1.toString() + " " + (myDataController!!.cur_character as main_character).getCharacterImgDrawable()
         )
         characterIcon = main_menyu_frontcharacter.newInstance(
             myDataController!!.cur_character.getName(),

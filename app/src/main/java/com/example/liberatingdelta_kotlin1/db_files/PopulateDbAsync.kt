@@ -102,6 +102,32 @@ class PopulateDbAsync internal constructor(db: RPG_RoomDatabase?) :
             0
         )
         userCharacters.insert(usechar)
+        usechar = User_Characters(
+            "Gamma",
+            0,
+            0,
+            "SimpleSword",
+            "none",
+            "none",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        )
+        userCharacters.insert(usechar)
         var usecard = User_Cards("RockToss", 3, "BasicDeck", 0)
         userCards!!.insert(usecard)
         usecard = User_Cards("RockToss", 3, "BasicDeck", 1)

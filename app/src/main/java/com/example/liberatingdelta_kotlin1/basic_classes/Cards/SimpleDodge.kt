@@ -6,33 +6,35 @@ import com.example.liberatingdelta_kotlin1.basic_classes.battle_character
 import com.example.liberatingdelta_kotlin1.basic_classes.stats_object
 
 class SimpleDodge :
-    Card("Simple Dodge", R.drawable.simpledodge_card, false, false, false, false, 0, 0, 50) {
-    val instanceName: String
-    fun preformCard(user: battle_character, target: battle_character) {
-        println(target.getNom().toString() + "has increased evasiveness ( P ) by 40% and ( M ) by 20% for 2 turns.")
+    Card("Simple Dodge", R.drawable.card_simpledodge, null, null, false, 0, 0, 50) {
+
+    override val instanceName: String
+
+    override fun preformCard(user: battle_character, target: battle_character) {
+        println(target.nom + "has increased evasiveness ( P ) by 40% and ( M ) by 20% for 2 turns.")
         preformEffectTodo(target)
         user.addEffectTodo(this, 1)
     }
 
     fun preformEffectTodo(target: battle_character) {
-        println(target.getNom().toString() + "has increased evasiveness ( P ) by 40% and ( M ) by 20%.")
-        target.getEffectStats().addStats(stats_object(0, 0, 0, 4000, 2000, 0, 0, 0, 0, 0))
+        println(target.nom + "has increased evasiveness ( P ) by 40% and ( M ) by 20%.")
+        target.addEffect(stats_object(0, 0, 0, 4000, 2000, 0, 0, 0, 0, 0))
     }
 
-    val info: String
-        get() = "↑ pEva of Self by 40% and mEva by 20% for 2 turns.\n" +
-                "Targets: " + getTargetCharAmt() + "\tWeight: " + getWeight() + "\tWait: " + getWait()
-
-    val numInstance: Int
+    override val info: () -> String = {
+        "↑ pEva of Self by 40% and mEva by 20% for 2 turns.\n" +
+        "Targets: " + targetAmt + "\tWeight: " + weight + "\tWait: " + wait
+    }
 
     override fun toString(): String {
-        return getClass().getSimpleName()
+        return javaClass.getSimpleName()
     }
 
     companion object {
         var deckAmt = 0
             private set
-        private const val numInstance = 0
+
+        private var numInstance = 0
 
         fun addDeckAmt() {
             deckAmt++
@@ -42,10 +44,13 @@ class SimpleDodge :
             deckAmt--
         }
     }
+    override fun addDeckAmt() { Companion.addDeckAmt()}
+    override fun removeDeckAmt() { Companion.removeDeckAmt()}
+
 
     init {
         instanceName =
-            getClass().getSimpleName().toString() + " " + numInstance
+            javaClass.getSimpleName() + " " + numInstance
         numInstance++
     }
 }

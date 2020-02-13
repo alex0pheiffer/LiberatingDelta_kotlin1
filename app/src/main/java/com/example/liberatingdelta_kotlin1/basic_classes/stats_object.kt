@@ -20,6 +20,25 @@ class stats_object
 )
 {
 
+    var attackM: Int? = null
+        private set
+    private var magicAff: Int? = null
+    private var charStr: Int? = null
+    val beforeAtkM: (charMagicAff: Int, charStr: Int) -> Unit = {
+        charMagicAff: Int, charStr: Int ->
+        this.magicAff = charMagicAff //these should be a value between 0 and 100, inclusive
+        this.charStr = charStr
+        if (this.magicAff!! < 0 || this.magicAff!! > 100 || charStr!! < 0 || charStr!! > 100) throw RuntimeException("Cannot compute attackM...the magicalAff: "+magicAff.toString()+" /strength: "+charStr.toString()+" is invalid.")
+        attackM = ((charMagicAff / charStr.toDouble())*attackA).toInt()
+    }
+    val afterAtkM: () -> Unit = {
+        attackM = ((magicAff!! / charStr!!.toDouble())*attackA).toInt()
+        System.out.println("updating the atkM !")
+    }
+    fun setAttackM(charMagicAff: Int, charStr: Int): Unit {
+        beforeAtkM(charMagicAff, charStr)
+    }
+
     fun addStats(stats: stats_object) {
         attackA = attackA + stats.attackA
         health = health + stats.health
@@ -31,6 +50,8 @@ class stats_object
         waterDefense = waterDefense + stats.waterDefense
         landDefense = landDefense + stats.landDefense
         airDefense = airDefense + stats.airDefense
+        if (attackM != null) afterAtkM()
+        System.out.println("Pl eas e make sure that the atkM is updating if it's been created...")
     }
 
     fun subtractStats(stats: stats_object) {
@@ -44,6 +65,8 @@ class stats_object
         waterDefense = waterDefense - stats.waterDefense
         landDefense = landDefense - stats.landDefense
         airDefense = airDefense - stats.airDefense
+        if (attackM != null) afterAtkM()
+        System.out.println("Pl eas e make sure that the atkM is updating if it's been created...")
     }
 
     fun setStats(stats: stats_object) {
@@ -57,6 +80,23 @@ class stats_object
         waterDefense = stats.waterDefense
         landDefense = stats.landDefense
         airDefense = stats.airDefense
+        if (attackM != null) afterAtkM()
+        System.out.println("Pl eas e make sure that the atkM is updating if it's been created...")
+    }
+
+    operator fun plus(stats: stats_object): stats_object {
+        var newstaty = stats_object(0,0,0,0,0,0,0,0,0,0)
+        newstaty.attackA = this.attackA+stats.attackA
+        newstaty.health = this.health+stats.health
+        newstaty.volatility = this.volatility+stats.volatility
+        newstaty.evasiveA = this.evasiveA+stats.evasiveA
+        newstaty.evasiveM = this.evasiveM+stats.evasiveM
+        newstaty.aDefense = this.aDefense+stats.aDefense
+        newstaty.fireDefense = this.fireDefense+stats.fireDefense
+        newstaty.waterDefense = this.waterDefense+stats.waterDefense
+        newstaty.landDefense = this.landDefense+stats.landDefense
+        newstaty.airDefense = this.airDefense+stats.airDefense
+        return newstaty
     }
 
     override fun toString(): String {

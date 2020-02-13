@@ -13,13 +13,18 @@ class battle_character {
     var remainingDeck: Deck
     var hand: ArrayList<Card?>?
     var hp: Int = 0
+        private set
     var wait: Int =0
     var cardEffectTodo: ArrayList<Card>? = null
     var waitEffectTodo: ArrayList<Int>? = null
     var isDead = false
     var turnSkip = false
-    var statsStatic: stats_object
+    val statsStatic: stats_object
     var effectStats: stats_object
+        private set
+    val magicalAffinity: Int
+    val strength: Int
+    var stats: stats_object
         private set
 
     constructor(thisCharacter: fighting_character, timeToTurn: Int, ally: Boolean) {
@@ -29,7 +34,7 @@ class battle_character {
         isAlly = ally
         itemEquipStats = thisCharacter.itemStats
         weaponEquipStats = thisCharacter.weaponStats
-        fullDeck = thisCharacter.deck.copy()
+        fullDeck = thisCharacter.deck!!.copy()
         remainingDeck = fullDeck.copy()
         hand = ArrayList()
         wait = timeToTurn
@@ -40,6 +45,10 @@ class battle_character {
         turnSkip = false
         statsStatic = thisCharacter.stats
         effectStats = stats_object(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        stats = statsStatic+effectStats
+        magicalAffinity=thisCharacter.magicalAffinity
+        strength=thisCharacter.strength
+        stats.setAttackM(magicalAffinity,strength)
     }
 
     //for creating temporary battle characters, for times such as simulating results
@@ -51,7 +60,7 @@ class battle_character {
         itemEquipStats = battler.itemEquipStats
         weaponEquipStats = battler.weaponEquipStats
         fullDeck = battler.getFullDeck().copy()
-        remainingDeck = battler.getRemainingDeck().copy()
+        remainingDeck = battler.remainingDeck.copy()
         hand = ArrayList()
         for (i in 0 until battler.getHand()) {
             hand!!.add(battler.getHandCard(i))
@@ -61,6 +70,10 @@ class battle_character {
         weightPoints = battler.weightPoints
         statsStatic = battler.statsStatic
         effectStats = stats_object(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        stats = statsStatic+effectStats
+        magicalAffinity=battler.magicalAffinity
+        strength=battler.strength
+        stats.setAttackM(magicalAffinity,strength)
     }
 
     fun reduceWait(reduction: Int): Int {
@@ -83,7 +96,7 @@ class battle_character {
     //volatility is stored in 100s (1000 == 10%)
     val isVolatile: Boolean
         get() { //volatility is stored in 100s (1000 == 10%)
-            val vol = (statsStatic.volatility + effectStats.volatility) / 100
+            val vol = (stats.volatility) / 100
             val rand = (Math.random() * 100).toInt()
             return if (vol >= rand) true else false
         }
@@ -92,17 +105,16 @@ class battle_character {
     fun hitWMagic(amt: Int, type: String): Int { //when the attack is purely magical
         var change = 0
         if (type == Characters.magicTypes[1]) { //Fire
-            change = (statsStatic.fireDefense + effectStats.fireDefense) * amt / 100
+            change = (stats.fireDefense * amt / 100.0).toInt()
         } else if (type == Characters.magicTypes[2]) { //Water
-            change = (statsStatic.waterDefense + effectStats.waterDefense) * amt / 100
+            change = (stats.waterDefense * amt / 100.0).toInt()
         } else if (type == Characters.magicTypes[3]) { //Land
-            change = (statsStatic.landDefense + effectStats.landDefense) * amt / 100
+            change = (stats.landDefense * amt / 100.0).toInt()
         } else if (type == Characters.magicTypes[4]) { //Air
-            change = (statsStatic.airDefense + effectStats.airDefense) * amt / 100
+            change = (stats.airDefense * amt / 100.0).toInt()
         } else if (type == Characters.magicTypes[5]) { //Scatter / ???
-            val def =
-                (statsStatic.airDefense + effectStats.airDefense + statsStatic.fireDefense + effectStats.fireDefense + statsStatic.landDefense + effectStats.landDefense + statsStatic.waterDefense + effectStats.waterDefense) / 4
-            change = def * amt / 100
+            val def = (stats.fireDefense+stats.landDefense+stats.waterDefense+stats.airDefense) / 4.0
+            change = (def * amt / 100.0).toInt()
         }
         reduceHealth(change)
         return change
@@ -110,18 +122,16 @@ class battle_character {
 
     //returns the amt of damage dealt
     fun hitWPhysical(amt: Int): Int { //when the attack is purely physical
-        val change = ((statsStatic.aDefense + effectStats.aDefense) * amt / 100.0).toInt()
+        val change = ( stats.aDefense * amt / 100.0).toInt()
         reduceHealth(change)
         return change
     }
 
     //returns the amt of damage dealt
-    fun hitWBoth(
-        amt: Int,
-        percentM: Int,
-        type: String
-    ): Int { //when the attack is both magical and physical... ex a magic sword
-        val Mhit = amt * percentM / 100
+    fun hitWBoth(amt: Int, percentM: Int, type: String): Int
+    {
+        //when the attack is both magical and physical... ex a magic sword
+        val Mhit = (amt * percentM / 100.0).toInt()
         val Ahit = amt - Mhit
         return hitWMagic(Mhit, type) + hitWPhysical(Ahit)
     }
@@ -156,15 +166,15 @@ class battle_character {
 
     //DOES NOT put the card in your hand
     fun drawCard(): Card? {
-        if (remainingDeck.getCardAmt() === 0) return null
-        val pulled: Card =
-            remainingDeck.getCard(remainingDeck.getCardAmt() - 1)
-        remainingDeck.removeCard(pulled)
+        if (remainingDeck.cardAmt == 0) return null
+        val pulled: Card? =
+            remainingDeck.getCard(remainingDeck.cardAmt - 1)
+        if (pulled != null) remainingDeck.removeCard(pulled)
         return pulled
     }
 
     //adds a given card to the user's deck
-//this shuffles the deck..
+    //this shuffles the deck..
     fun addCardToDeck(card: Card?) {
         remainingDeck.addCard(card)
         shuffleDeck()
@@ -217,6 +227,8 @@ class battle_character {
         println("applying " + cardEffectTodo!!.size + " effects...")
         var i = 0
         while (i < cardEffectTodo!!.size) {
+            //these effects are using the total stats...the effect stats of the previous round and the static stats
+
             println("effect : " + cardEffectTodo!![i].nom)
             cardEffectTodo!![i].preformEffectTodo(this)
             waitEffectTodo!![i] = waitEffectTodo!![i] - 1
@@ -227,6 +239,9 @@ class battle_character {
             }
             i++
         }
+        //todo do you want to apply the sum effects to the stats at the end...
+        //todo or rather change the stats in the add/subtract effectStats function?
+        stats = statsStatic+effectStats
     }
 
     fun resetEffectStats() {
@@ -242,13 +257,19 @@ class battle_character {
         effectStats.volatility = 0
     }
 
+    fun subtractEffect(subtract: stats_object) {
+        effectStats.subtractStats(subtract)
+    }
+
+    fun addEffect(add: stats_object) {
+        effectStats.addStats(add)
+    }
+
     fun fillHand() {
-        println("Deck of " + nom + " : " + remainingDeck.getNom())
-        for (i in 0 until remainingDeck.getSudoCardAmt()) {
+        println("Deck of " + nom + " : " + remainingDeck.nom)
+        for (i in 0 until remainingDeck.sudoCardAmt) {
             println(
-                remainingDeck.getSudoCard(i).getCard(0).getNom().toString() + " " + remainingDeck.getSudoCard(
-                    i
-                ).getAmount()
+                remainingDeck.getSudoCard(i)?.getCard(0)?.nom + " " + remainingDeck.getSudoCard(i)?.size
             )
         }
         while (hand?.size ?: 0 < 5) {
@@ -265,12 +286,6 @@ class battle_character {
     fun getFullDeck(): Deck {
         return fullDeck
     }
-
-    val patk: Int
-        get() = statsStatic.attackA + effectStats.attackA
-
-    val matk: Int
-        get() = statsStatic.attackA + effectStats.attackA
 
     val nom: String
         get() = thisCharacter?.name ?: ""

@@ -1,14 +1,14 @@
 package com.example.liberatingdelta_kotlin1.basic_classes
 
-import com.example.liberatingdelta_kotlin1.basic_classes.Cards.sudoCard
+import com.example.liberatingdelta_kotlin1.basic_classes.sudoCard
 import java.util.*
 
 class BlankDeck : abstractDeck {
     override val nom = "BlankDeck"
     var alphabetcards: ArrayList<sudoCard>
-    var allCards //this is in no particular order. its just a list of all the cards.
-            : ArrayList<Card?>
-    override var cardAmt: Int
+    var allCards: ArrayList<Card?> //this is in no particular order. its just a list of all the cards.
+    override val cardAmt: Int
+        get() = allCards.size
     private val MAX_DECK_SIZE = 200
 
     //only sorts the very last card...
@@ -17,7 +17,6 @@ class BlankDeck : abstractDeck {
         val i = alphabetcards.size - 1
         var newIndex = 0
         var j = i
-        stillLarger = true
         while (stillLarger) {
             j--
             if (alphabetcards[j].getCard(0).toString().compareTo(alphabetcards[i].getCard(0).toString()) <= 0) {
@@ -34,29 +33,18 @@ class BlankDeck : abstractDeck {
     }
 
     //typical binary search: starting input... card, 0, alphabetcards.size()-1
-    override fun binarySearch(
-        card: Card?,
-        startIndex: Int,
-        endIndex: Int
-    ): Int {
+    override fun binarySearch(card: Card?, startIndex: Int, endIndex: Int): Int {
+        if (card == null) return -1
         val x = card.toString()
         if (endIndex >= startIndex) {
             val mid = startIndex + ((endIndex - startIndex).toDouble() / 2 + .5).toInt()
-            // If the element is present at the
-// middle itself
+            // If the element is present at the middle itself
             if (alphabetcards[mid].getCard(0).toString().compareTo(x) == 0) return mid
-            // If element is smaller than mid, then
-// it can only be present in left subarray
-            return if (alphabetcards[mid].getCard(0).toString().compareTo(x) > 0) binarySearch(
-                card,
-                startIndex,
-                mid - 1
-            ) else binarySearch(card, mid + 1, endIndex)
-            // Else the element can only be present
-// in right subarray
+            // If element is smaller than mid, then it can only be present in left subarray
+            return if (alphabetcards[mid].getCard(0).toString().compareTo(x) > 0) binarySearch(card, startIndex, mid - 1) else binarySearch(card, mid + 1, endIndex)
+            // Else the element can only be present in right subarray
         }
-        // We reach here when element is not present
-// in array
+        // We reach here when element is not present in array
         return -1
     }
 
@@ -70,13 +58,13 @@ class BlankDeck : abstractDeck {
     }
 
     //will be overwritten by real decks
-//when bringing a new card into the deck  ---- returns the new index of the sudoCard, will usually be ignored
-    override fun addCard(card: Card?): Int { //todo replace with a mitigation...pop up window...
-//todo also probably check that the decksize isn't full before beginning a mission...
-        if (cardAmt++ >= MAX_DECK_SIZE) throw RuntimeException("adding too many cards...")
+    //when bringing a new card into the deck  ---- returns the new index of the sudoCard, will usually be ignored
+    override fun addCard(card: Card?): Int {
+        //todo replace with a mitigation...pop up window...
+        //todo also probably check that the decksize isn't full before beginning a mission...
+        if (cardAmt+1 >= MAX_DECK_SIZE) throw RuntimeException("adding too many cards...")
         //check to make sure the deck isn't empty
-        var newIndex = -1
-        newIndex = if (alphabetcards.size == 0) {
+        var newIndex = if (alphabetcards.size == 0) {
             alphabetcards.add(sudoCard(card!!))
             0
         } else { //try to find the sudocard deck for this card
@@ -90,13 +78,12 @@ class BlankDeck : abstractDeck {
                 //throw new RuntimeException("CHECK!!");
             }
         }
-        cardAmt++
         allCards.add(card)
         return newIndex
     }
 
     //will be overwritten by real decks
-//when removing a card from your inventory...you will no longer own this card
+    //when removing a card from your inventory...you will no longer own this card
     override fun removeCard(card: Card?) {
         val index = binarySearch(card, 0, alphabetcards.size - 1)
         //find the sudocard that matches this card
@@ -118,7 +105,6 @@ class BlankDeck : abstractDeck {
                 }
             }
         }
-        cardAmt--
         allCards.remove(card)
     }
 
@@ -148,18 +134,12 @@ class BlankDeck : abstractDeck {
     }
 
     //only applicable to BlankDeck
-//updates the total amount individual cards: cardAmt
+    //updates the total amount individual cards: cardAmt
     fun updateCardAmt() {
         var amt = 0
         for (i in alphabetcards.indices) {
             amt = amt + alphabetcards[i].size
         }
-        cardAmt = amt
-    }
-
-    //updates the total amount individual cards: cardAmt
-    override fun getCardAmt(): Int {
-        return allCards.size
     }
 
     override fun toString(): String {
@@ -168,8 +148,6 @@ class BlankDeck : abstractDeck {
 
     init {
         alphabetcards = ArrayList()
-        allCards =
-            ArrayList()
-        cardAmt = 0
+        allCards = ArrayList()
     }
 }

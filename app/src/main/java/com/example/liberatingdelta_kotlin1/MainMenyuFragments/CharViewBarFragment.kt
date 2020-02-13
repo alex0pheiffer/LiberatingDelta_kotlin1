@@ -9,20 +9,24 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.liberatingdelta_kotlin1.R
+import com.example.liberatingdelta_kotlin1.basic_classes.PL
+import com.example.liberatingdelta_kotlin1.pl_relations.PL_VendingMachine
 import kotlinx.android.synthetic.main.fragment_char_view_bar.view.*
 
-private const val ARG_PARAM1 = "param1"
+private const val PlayerLevel = "pl"
 private const val ARG_PARAM2 = "param2"
 
-class CharViewBarFragment : Fragment() {
-    private var param1: String? = null
+class CharViewBarFragment : Fragment(), updateAllPL{
+    private var pl: Int = 0
+    private lateinit var this_pl: PL
     private var param2: String? = null
     private var listener: charViewBarListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
+            pl = it.getInt(PlayerLevel)
+            this_pl = PL_VendingMachine.getPL(pl)
             param2 = it.getString(ARG_PARAM2)
         }
     }
@@ -86,6 +90,11 @@ class CharViewBarFragment : Fragment() {
         listener = null
     }
 
+    override fun lemmeupdatethatpl(pl:Int) {
+        this.pl = pl
+        this_pl = PL_VendingMachine.getPL(pl)
+    }
+
     interface charViewBarListener {
         fun statsPressed(view: View)
         fun equipPressed(view: View)
@@ -96,10 +105,10 @@ class CharViewBarFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(pl: Int, param2: String) =
             CharViewBarFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
+                    putInt(PlayerLevel, pl)
                     putString(ARG_PARAM2, param2)
                 }
             }

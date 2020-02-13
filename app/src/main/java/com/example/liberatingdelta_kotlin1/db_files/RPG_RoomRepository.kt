@@ -719,7 +719,7 @@ class RPG_RoomRepository(application: Application) {
     }
 
     init {
-        val db: RPG_RoomDatabase = RPG_RoomDatabase.Companion.getDatabase(application)!!
+        val db: RPG_RoomDatabase = RPG_RoomDatabase.getDatabase(application)!!
         userValuesDao = db.UserValuesDao()!!
         userCharactersDao = db.UserCharactersDao()!!
         userInventoryDao = db.UserInventoryDao()!!

@@ -10,7 +10,7 @@ class Shove :
 
     override fun preformCard(user: battle_character, target: battle_character) {
         println("Returns .4 * pAtk")
-        var amt = (user.Patk * .4) as Int
+        var amt = (user.stats.attackA * .4).toInt()
         amt = target.hitWPhysical(amt)
         println(target.nom.toString() + " lost " + amt + " hp.")
         println(target.nom.toString() + " : " + target.hp)
@@ -29,7 +29,7 @@ class Shove :
         var deckAmt = 0
             private set
 
-        var numInstance = 0
+        private var numInstance = 0
 
         fun addDeckAmt() {
             deckAmt++
@@ -39,6 +39,9 @@ class Shove :
             deckAmt--
         }
     }
+    override fun addDeckAmt() { Companion.addDeckAmt()}
+    override fun removeDeckAmt() { Companion.removeDeckAmt()}
+
 
     init {
         instanceName = this.toString()+ " " + numInstance

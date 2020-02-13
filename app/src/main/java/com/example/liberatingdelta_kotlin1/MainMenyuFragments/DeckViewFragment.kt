@@ -10,14 +10,18 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 
 import com.example.liberatingdelta_kotlin1.R
+import com.example.liberatingdelta_kotlin1.basic_classes.Deck
+import com.example.liberatingdelta_kotlin1.basic_classes.PL
 import com.example.liberatingdelta_kotlin1.databinding.FragmentCharViewStatsBinding
 import com.example.liberatingdelta_kotlin1.databinding.FragmentDeckViewBinding
+import com.example.liberatingdelta_kotlin1.pl_relations.PL_VendingMachine
 
-private const val ARG_PARAM1 = "param1"
+private const val PlayerLevel = "PlayerLevel"
 private const val ARG_PARAM2 = "param2"
 
-class DeckViewFragment : Fragment(), DeckViewBarFragment.deckViewBarListener {
-    private var param1: String? = null
+class DeckViewFragment : Fragment(), DeckViewBarFragment.deckViewBarListener, updateAllPL, deployArrowsInterface {
+    private var pl: Int = 0
+    private lateinit var this_pl: PL
     private var param2: String? = null
 
     //this needs to become a deck scrollling object later..
@@ -26,7 +30,8 @@ class DeckViewFragment : Fragment(), DeckViewBarFragment.deckViewBarListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
+            pl = it.getInt(PlayerLevel)
+            this_pl = PL_VendingMachine.getPL(pl)
             param2 = it.getString(ARG_PARAM2)
         }
     }
@@ -42,16 +47,27 @@ class DeckViewFragment : Fragment(), DeckViewBarFragment.deckViewBarListener {
         return binding.root
     }
 
-    fun deletePressed(deck: Deck) {
+    override fun deletePressed(deck: Deck) {
 
     }
 
-    fun viewPressed(deck: Deck) {
+    override fun viewPressed(deck: Deck) {
 
     }
 
-    fun showValid(deck: Deck) {
+    override fun showValid(deck: Deck) {
 
+    }
+
+    override fun lemmeupdatethatpl(pl:Int) {
+        this.pl = pl
+        this_pl = PL_VendingMachine.getPL(pl)
+    }
+
+    fun grabCUR_PL(): PL {
+        //todo
+        //return mListner.grabCUR_PL()
+        return PL_VendingMachine.getPL(0)
     }
 
     /*
@@ -76,14 +92,23 @@ class DeckViewFragment : Fragment(), DeckViewBarFragment.deckViewBarListener {
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction(uri: Uri)
     }
+
+    override fun updateDB_mmc(mainCharacter: main_character) {
+        mListener?.updateDB_mmc(mainCharacter)
+    }
     */
+
+
+    override fun hasEmpty(): Boolean {
+        return true
+    }
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(pl: Int, param2: String) =
             DeckViewFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
+                    putInt(PlayerLevel, pl)
                     putString(ARG_PARAM2, param2)
                 }
             }

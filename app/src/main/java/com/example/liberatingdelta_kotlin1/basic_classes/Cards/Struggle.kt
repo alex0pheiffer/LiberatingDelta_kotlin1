@@ -3,33 +3,31 @@ package com.example.liberatingdelta_kotlin1.basic_classes.Cards
 import com.example.liberatingdelta_kotlin1.basic_classes.Card
 import com.example.liberatingdelta_kotlin1.basic_classes.battle_character
 
-class Struggle : Card("Struggle", 0, false, false, false, false, 1, 0, 30) {
-    val instanceName: String
-    fun preformCard(user: battle_character, target: battle_character) {
+class Struggle : Card("Struggle", 0, null, null, false, 1, 0, 30) {
+
+    override val instanceName: String
+
+    override fun preformCard(user: battle_character, target: battle_character) {
         println("Returns .3 * pAtk")
-        var amt = (user.getPatk() * .3) as Int
+        var amt = (user.stats.attackA * .3).toInt()
         amt = target.hitWPhysical(amt)
-        println(target.getNom().toString() + " lost " + amt + " hp.")
-        println(target.getNom().toString() + " : " + target.getHP())
+        println(target.nom+ " lost " + amt + " hp.")
+        println(target.nom + " : " + target.hp)
     }
 
-    fun preformEffectTodo(target: battle_character?) { //none
+    override val info: () -> String = {
+        "Attack Opponent with .3*pAtk.\n" +
+        "Targets: " + targetAmt + "\tWeight: " + weight + "\tWait: " + wait
     }
-
-    val info: String
-        get() = "Attack Opponent with .3*pAtk.\n" +
-                "Targets: " + getTargetCharAmt() + "\tWeight: " + getWeight() + "\tWait: " + getWait()
-
-    val numInstance: Int
-
     override fun toString(): String {
-        return getClass().getSimpleName()
+        return javaClass.getSimpleName()
     }
 
     companion object {
         var deckAmt = 0
             private set
-        private const val numInstance = 0
+
+        private var numInstance = 0
 
         fun addDeckAmt() {
             deckAmt++
@@ -39,9 +37,11 @@ class Struggle : Card("Struggle", 0, false, false, false, false, 1, 0, 30) {
             deckAmt--
         }
     }
+    override fun addDeckAmt() { Companion.addDeckAmt()}
+    override fun removeDeckAmt() { Companion.removeDeckAmt()}
 
     init {
-        instanceName = getClass().getSimpleName().toString() + " " + numInstance
+        instanceName = javaClass.getSimpleName() + " " + numInstance
         numInstance++
     }
 }

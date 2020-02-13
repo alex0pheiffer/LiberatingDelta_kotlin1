@@ -5,32 +5,34 @@ import com.example.liberatingdelta_kotlin1.basic_classes.Card
 import com.example.liberatingdelta_kotlin1.basic_classes.battle_character
 
 class Distract :
-    Card("Distract", R.drawable.distract_card, false, false, false, false, 1, 2, 10) {
-    val instanceName: String
-    fun preformCard(user: battle_character?, target: battle_character) {
-        println(target.getNom().toString() + " has lost a ( 1 ) turn!")
+    Card("Distract", R.drawable.card_distract, null, null, false,1, 2, 10) {
+
+    override val instanceName: String
+
+    override fun preformCard(user: battle_character, target: battle_character) {
+        println(target.nom + " has lost a ( 1 ) turn!")
         target.addEffectTodo(this, 1)
     }
 
     fun preformEffectTodo(target: battle_character) {
         println("Turn is skipped.")
-        target.setTurnSkip(true)
+        target.turnSkip = true
     }
 
-    val info: String
-        get() = "Opponent will lose a turn.\n" +
-                "Targets: " + getTargetCharAmt() + "\tWeight: " + getWeight() + "\tWait: " + getWait()
-
-    val numInstance: Int
+    override val info: () -> String = {
+        "Opponent will lose a turn.\n" +
+                "Targets: " + targetAmt + "\tWeight: " + weight + "\tWait: " + wait
+    }
 
     override fun toString(): String {
-        return getClass().getSimpleName()
+        return javaClass.getSimpleName()
     }
 
     companion object {
         var deckAmt = 0
             private set
-        private const val numInstance = 0
+
+        private var numInstance = 0
 
         fun addDeckAmt() {
             deckAmt++
@@ -40,9 +42,12 @@ class Distract :
             deckAmt--
         }
     }
+    override fun addDeckAmt() { Companion.addDeckAmt()}
+    override fun removeDeckAmt() { Companion.removeDeckAmt()}
+
 
     init {
-        instanceName = getClass().getSimpleName().toString() + " " + numInstance
+        instanceName = javaClass.getSimpleName() + " " + numInstance
         numInstance++
     }
 }
